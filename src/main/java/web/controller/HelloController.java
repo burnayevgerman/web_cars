@@ -18,9 +18,6 @@ import java.util.regex.Pattern;
 
 @Controller
 public class HelloController {
-	@Autowired
-	private CarService carService;
-
 	@GetMapping(value = "/")
 	public String printWelcome(ModelMap model) {
 		List<String> messages = new ArrayList<>();
@@ -29,16 +26,5 @@ public class HelloController {
 		messages.add("5.2.0 version by sep'19 ");
 		model.addAttribute("messages", messages);
 		return "index";
-	}
-
-	@GetMapping(value = "/cars")
-	public String printCarsWithCount(@RequestParam(value="count", required = false) String sCount, Model model) {
-		if (Objects.nonNull(sCount) && Pattern.matches("\\d+", sCount)) {
-			model.addAttribute("cars", carService.getCars(Integer.parseInt(sCount)));
-		} else {
-			model.addAttribute("cars", carService.getCars());
-		}
-
-		return "cars";
 	}
 }

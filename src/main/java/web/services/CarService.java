@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 import web.models.Car;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class CarService {
@@ -23,15 +24,7 @@ public class CarService {
         return getCars(cars.size());
     }
 
-    public List<Car> getCars(int n) {
-        if (n < 0) {
-            n = 0;
-        }
-
-        if (n > cars.size()) {
-            n = cars.size();
-        }
-
-        return cars.subList(0, n);
+    public List<Car> getCars(Integer n) {
+        return cars.stream().limit(Optional.ofNullable(n).orElse(cars.size())).toList();
     }
 }
